@@ -1,14 +1,14 @@
 ARG VERSION="1.2.1"
 ARG NODE_VERSION="20"
+ARG NODE_BUILD_VERSION="18"
 
-FROM node:${NODE_VERSION}-alpine as build
+FROM node:${NODE_BUILD_VERSION}-alpine as build
 
 RUN apk add --no-cache tini ffmpeg git graphicsmagick
 
 WORKDIR /app
 ARG VERSION
 RUN wget -qO- https://github.com/eliteSchwein/mooncord/archive/refs/tags/v${VERSION}.tar.gz | tar -xz --strip-components=1
-RUN npm i -g npm@latest
 RUN npm ci --omit=dev --prefer-offline --no-audit
 
 FROM node:${NODE_VERSION}-alpine
@@ -27,7 +27,6 @@ RUN mkdir -p /config && chown -R node:node /config
 USER node
 WORKDIR /app
 
-# Set the script as the default entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["node", "/app/dist/index.js", "/config"]
