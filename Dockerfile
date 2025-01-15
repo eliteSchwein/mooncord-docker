@@ -8,7 +8,8 @@ RUN apk add --no-cache tini ffmpeg git graphicsmagick
 WORKDIR /app
 ARG VERSION
 RUN wget -qO- https://github.com/eliteSchwein/mooncord/archive/refs/tags/v${VERSION}.tar.gz | tar -xz --strip-components=1
-RUN npm ci --only=prod
+RUN npm i -g npm@latest
+RUN npm ci --omit=dev --prefer-offline --no-audit
 
 FROM node:${NODE_VERSION}-alpine
 

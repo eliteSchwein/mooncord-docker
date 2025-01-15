@@ -5,9 +5,7 @@ BUILDER_NAME="mybuilder"
 PLATFORMS="linux/arm/v7,linux/arm64/v8,linux/amd64"
 BUILD_CONTEXT="."
 
-CPU_PERIOD=100000
-CPU_CORES=4
-CPU_QUOTA=$((CPU_CORES * CPU_PERIOD))
+CPU_CORES=8
 
 ### credits to th33xitus for the script base
 clear
