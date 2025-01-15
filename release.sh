@@ -102,5 +102,7 @@ docker buildx prune --all -f
 
 status_msg "Build $TAG"
 
-docker buildx build --push --platform "$PLATFORMS" --tag "$TAG" "$BUILD_CONTEXT"
-docker buildx build --push --platform "$PLATFORMS" --tag "tludwigdev/mooncord:latest" "$BUILD_CONTEXT"
+docker buildx build --push --platform "$PLATFORMS" \
+  --tag "$TAG" \
+  --tag "tludwigdev/mooncord:latest" \
+  "$BUILD_CONTEXT"
