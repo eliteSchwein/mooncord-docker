@@ -5,9 +5,6 @@ ARG NODE_BUILD_VERSION="18"
 # Build stage: Install dependencies and build application
 FROM node:${NODE_BUILD_VERSION}-alpine as build
 
-# Install runtime and build dependencies
-RUN apk add --no-cache tini ffmpeg git graphicsmagick
-
 WORKDIR /app
 
 # Fetch the application source
@@ -21,10 +18,9 @@ RUN npm ci --omit=dev --prefer-offline --no-audit
 FROM node:${NODE_VERSION}-alpine
 
 # Install runtime dependencies
-RUN apk add --no-cache tini ffmpeg graphicsmagick
+RUN apk add --no-cache ffmpeg graphicsmagick
 
 # Copy necessary files and binaries from the build stage
-COPY --from=build /sbin/tini /sbin/tini
 COPY --from=build /app /app
 
 # Copy configuration and entrypoint scripts
@@ -43,4 +39,4 @@ WORKDIR /app
 
 # Set entrypoint and default command
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["node", "/app/dist/index.js", "/config"]
+CMD ["node", "--expose-gc", "--max-old-space-size=64", "/app/dist/index.js", "/config"]
