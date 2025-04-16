@@ -1,5 +1,5 @@
-ARG VERSION="1.2.1"
-ARG NODE_VERSION="20"
+ARG VERSION="1.3.0"
+ARG NODE_VERSION="22"
 ARG NODE_BUILD_VERSION="18"
 
 # Build stage: Install dependencies and build application
