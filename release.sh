@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION="" # Leave empty as it will be asked below
-BUILDER_NAME="mybuilder"
+BUILDER_NAME="mooncord_builder"
 PLATFORMS="linux/arm/v7,linux/arm64/v8,linux/amd64"
 BUILD_CONTEXT="."
 
@@ -106,3 +106,6 @@ docker buildx build --push --platform "$PLATFORMS" \
   --tag "$TAG" \
   --tag "tludwigdev/mooncord:latest" \
   "$BUILD_CONTEXT"
+
+echo "Setting builder 'default' as default..."
+docker buildx use default
